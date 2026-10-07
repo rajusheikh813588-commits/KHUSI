@@ -120,6 +120,10 @@ footer{background:#172033;color:#fff;padding:28px;text-align:center;margin-top:2
 
 <footer>© 2026 KHUSI — Shop Easy. Shop Happy. | Your trusted online shopping store</footer>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyCAF02VGwwDDjuDj-0WnueUXXhNaaIagu8",
@@ -276,15 +280,4 @@ async function loadOrders(){
 }
 
 auth.onAuthStateChanged(user=>{
- const panel=document.getElementById("adminPanel");
- if(user&&user.email===ADMIN_EMAIL){
-  panel.classList.add("show");
-  document.getElementById("adminEmail").textContent=user.email;
-  renderAdmin();
-  loadOrders();
- }else{
-  panel.classList.remove("show");
- }
-});
-
-loadProducts().catch(
+ const pan
