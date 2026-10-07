@@ -120,11 +120,7 @@ footer{background:#172033;color:#fff;padding:28px;text-align:center;margin-top:2
 
 <footer>© 2026 KHUSI — Shop Easy. Shop Happy. | Your trusted online shopping store</footer>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyCAF02VGwwDDjuDj-0WnueUXXhNaaIagu8",
   authDomain: "khusi-568ee.firebaseapp.com",
@@ -134,7 +130,9 @@ const firebaseConfig = {
   appId: "1:38971993119:web:f562ecdbd2ab47036df92a",
   measurementId: "G-F8LYTML64D"
 };
-const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 const ADMIN_EMAIL="rajusheikh813588@gmail.com";
 let products=[], cart=JSON.parse(localStorage.getItem("khusiCart")||"[]"), active="All", editingId=null;
 
@@ -178,7 +176,7 @@ window.placeOrder=async()=>{
  const items=cart.map(i=>{const p=products.find(x=>x.id===i.id);return p?{productId:p.id,name:p.name,price:Number(p.price||0),qty:i.qty}:null}).filter(Boolean);
  const total=items.reduce((s,i)=>s+i.price*i.qty,0);
  try{
-  await addDoc(collection(db,"orders"),{customerName:name,phone,pin,address,paymentMethod:"Cash on Delivery",items,total,status:"New",createdAt:serverTimestamp()});
+  await db.collection("orders").add({customerName:name,phone,pin,address,paymentMethod:"Cash on Delivery",items,total,status:"New",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
   cart=[];save();render();closeCheckout();
   alert("Order placed successfully! KHUSI will contact you soon.");
  }catch(e){document.getElementById("orderMsg").textContent="Order failed: "+e.message}
@@ -186,11 +184,11 @@ window.placeOrder=async()=>{
 
 window.showAuth=()=>{document.getElementById("authSection").style.display="block";document.getElementById("authSection").scrollIntoView({behavior:"smooth"})}
 window.hideAuth=()=>document.getElementById("authSection").style.display="none";
-window.loginUser=async()=>{const email=document.getElementById("email").value.trim(),pass=document.getElementById("password").value;try{await signInWithEmailAndPassword(auth,email,pass);document.getElementById("authMsg").textContent="Login successful.";hideAuth()}catch(e){document.getElementById("authMsg").textContent="Login failed: "+e.message}}
-window.logoutUser=()=>signOut(auth);
+window.loginUser=async()=>{const email=document.getElementById("email").value.trim(),pass=document.getElementById("password").value;try{await auth.signInWithEmailAndPassword(email,pass);document.getElementById("authMsg").textContent="Login successful.";hideAuth()}catch(e){document.getElementById("authMsg").textContent="Login failed: "+e.message}}
+window.logoutUser=()=>auth.signOut();
 
 async function loadProducts(){
- const snap=await getDocs(collection(db,"products"));products=snap.docs.map(d=>({id:d.id,...d.data()}));
+ const snap=await db.collection("products").get();products=snap.docs.map(d=>({id:d.id,...d.data()}));
  document.getElementById("firebaseStatus").textContent="✅ KHUSI database connected successfully.";render();renderAdmin();
 }
 
@@ -200,13 +198,13 @@ function renderAdmin(){
 }
 
 window.saveProduct=async()=>{
- const data={name:document.getElementById("pName").value.trim(),price:Number(document.getElementById("pPrice").value),old:Number(document.getElementById("pOld").value)||0,cat:document.getElementById("pCat").value,icon:document.getElementById("pIcon").value.trim()||"🛍️",image:document.getElementById("pImage").value.trim(),updatedAt:serverTimestamp()};
+ const data={name:document.getElementById("pName").value.trim(),price:Number(document.getElementById("pPrice").value),old:Number(document.getElementById("pOld").value)||0,cat:document.getElementById("pCat").value,icon:document.getElementById("pIcon").value.trim()||"🛍️",image:document.getElementById("pImage").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
  if(!data.name||!data.price){alert("Product name and price are required.");return}
- try{if(editingId)await updateDoc(doc(db,"products",editingId),data);else await addDoc(collection(db,"products"),{...data,createdAt:serverTimestamp()});editingId=null;clearForm();await loadProducts();alert("Product saved successfully.")}catch(e){alert("Could not save product: "+e.message)}
+ try{if(editingId)await db.collection("products").doc(editingId).update(data);else await db.collection("products").add({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});editingId=null;clearForm();await loadProducts();alert("Product saved successfully.")}catch(e){alert("Could not save product: "+e.message)}
 }
 
 window.editProduct=id=>{const p=products.find(x=>x.id===id);if(!p)return;editingId=id;document.getElementById("pName").value=p.name||"";document.getElementById("pPrice").value=p.price||"";document.getElementById("pOld").value=p.old||"";document.getElementById("pCat").value=p.cat||"Electronics";document.getElementById("pIcon").value=p.icon||"";document.getElementById("pImage").value=p.image||""}
-window.deleteProduct=async id=>{if(!confirm("Delete this product?"))return;try{await deleteDoc(doc(db,"products",id));await loadProducts()}catch(e){alert("Could not delete product: "+e.message)}}
+window.deleteProduct=async id=>{if(!confirm("Delete this product?"))return;try{await db.collection("products").doc(id).delete();await loadProducts()}catch(e){alert("Could not delete product: "+e.message)}}
 window.clearForm=()=>{editingId=null;["pName","pPrice","pOld","pIcon","pImage"].forEach(id=>document.getElementById(id).value="")}
 
 function formatOrderDate(ts){
@@ -219,7 +217,7 @@ function formatOrderDate(ts){
 
 async function updateOrderStatus(id,status){
  try{
-  await updateDoc(doc(db,"orders",id),{status,updatedAt:serverTimestamp()});
+  await db.collection("orders").doc(id).update({status,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
   await loadOrders();
  }catch(e){alert("Could not update order: "+e.message)}
 }
@@ -229,7 +227,7 @@ window.changeOrderStatus=(id,status)=>updateOrderStatus(id,status);
 window.deleteOrder=async id=>{
  if(!confirm("Delete this order permanently?"))return;
  try{
-  await deleteDoc(doc(db,"orders",id));
+  await db.collection("orders").doc(id).delete();
   await loadOrders();
  }catch(e){alert("Could not delete order: "+e.message)}
 }
@@ -238,7 +236,7 @@ async function loadOrders(){
  const box=document.getElementById("ordersList");
  box.textContent="Loading orders...";
  try{
-  const snap=await getDocs(collection(db,"orders"));
+  const snap=await db.collection("orders").get();
   const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
   orders.sort((a,b)=>{
    const ad=a.createdAt&&typeof a.createdAt.toMillis==="function"?a.createdAt.toMillis():0;
@@ -277,5 +275,16 @@ async function loadOrders(){
  }
 }
 
-onAuthStateChanged(auth,user=>{
- const panel=document.getElementById("
+auth.onAuthStateChanged(user=>{
+ const panel=document.getElementById("adminPanel");
+ if(user&&user.email===ADMIN_EMAIL){
+  panel.classList.add("show");
+  document.getElementById("adminEmail").textContent=user.email;
+  renderAdmin();
+  loadOrders();
+ }else{
+  panel.classList.remove("show");
+ }
+});
+
+loadProducts().catch(
