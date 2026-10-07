@@ -39,7 +39,7 @@ main{max-width:1200px;margin:auto;padding:0 16px 40px}
 .panel h2{margin-top:0}.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}
 .cart-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
 .cart-icon{font-size:38px}.qty button{border:1px solid #ddd;background:#fff;padding:4px 9px}
-.checkout{width:100%;padding:13px;border:0;background:#fb641b;color:#fff;font-weight:800;border-radius:5px;margin-top:15px}
+.checkout{width:100%;padding:13px;border:0;background:#fb641b;color:#fff;font-weight:800;border-radius:5px;margin-top:15px}.checkout-form{display:none;max-width:520px;margin:20px auto;background:#fff;padding:22px;border-radius:10px;box-shadow:0 2px 10px #0002}.checkout-form.show{display:block}.checkout-form input,.checkout-form textarea,.checkout-form select{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:6px;font-size:15px}.place-order{width:100%;padding:13px;border:0;background:#2874f0;color:#fff;font-weight:800;border-radius:6px;cursor:pointer;margin-top:10px}.order-msg{padding:10px;border-radius:6px;margin-top:10px;background:#eef5ff}
 .auth-panel{max-width:420px;margin:30px auto;background:#fff;padding:24px;border-radius:10px;box-shadow:0 2px 10px #0002}
 .auth-panel input{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:5px}
 .auth-panel button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:5px;background:#2874f0;color:#fff;font-weight:700;cursor:pointer}
@@ -136,6 +136,9 @@ footer{background:#172033;color:#fff;padding:28px;text-align:center;margin-top:2
   <button onclick="logoutUser()">Logout</button>
 
   <div class="admin-list" id="adminList"></div>
+  <hr>
+  <h3>📦 Customer Orders</h3>
+  <div class="admin-list" id="ordersList"><p>Loading orders...</p></div>
 </section>
 
 <div class="modal" id="modal" onclick="if(event.target.id==='modal')closeCart()">
@@ -148,6 +151,20 @@ footer{background:#172033;color:#fff;padding:28px;text-align:center;margin-top:2
     <button class="checkout" onclick="checkout()">Proceed to Checkout</button>
   </div>
 </div>
+
+<section id="checkoutSection" class="checkout-form">
+  <h2>📦 Checkout</h2>
+  <p>আপনার ডেলিভারি তথ্য দিন। বর্তমানে <b>Cash on Delivery (COD)</b> available.</p>
+  <input id="cName" placeholder="আপনার নাম *">
+  <input id="cPhone" type="tel" placeholder="মোবাইল নম্বর *">
+  <textarea id="cAddress" rows="3" placeholder="সম্পূর্ণ ঠিকানা *"></textarea>
+  <input id="cPincode" inputmode="numeric" placeholder="পিন কোড *">
+  <select id="cPayment"><option value="COD">Cash on Delivery</option></select>
+  <div id="checkoutTotal" style="font-weight:800;margin:10px 0"></div>
+  <button class="place-order" onclick="placeOrder()">Place Order</button>
+  <button class="secondary" style="width:100%;padding:12px;margin-top:8px;border:0;border-radius:6px;cursor:pointer" onclick="hideCheckout()">Back</button>
+  <div id="orderMsg" class="order-msg" style="display:none"></div>
+</section>
 
 <footer>© 2026 KHUSI — Shop Easy. Shop Happy. | Your trusted online shopping store</footer>
 
@@ -172,7 +189,7 @@ import {
 
 /* KHUSI Firebase configuration */
 const firebaseConfig = {
-  apiKey: "AIzaSyCAFO2VGwwDDjuDj-oWnueUXXhNaalagu8",
+  apiKey: "AIzaSyCAF02VGwwDDjuDj-0WnueUXXhNaaIagu8",
   authDomain: "khusi-568ee.firebaseapp.com",
   projectId: "khusi-568ee",
   storageBucket: "khusi-568ee.firebasestorage.app",
@@ -200,6 +217,7 @@ async function loadProducts(){
     "✅ KHUSI database connected successfully.";
   render();
   renderAdmin();
+  loadOrders();
 }
 
 window.filterCat = function(c){
@@ -320,7 +338,44 @@ window.removeItem = function(id){
 };
 
 window.checkout = function(){
-  alert("Checkout is the next step. We can connect Cash on Delivery orders to Firebase next.");
+  if(!cart.length){ alert("Your cart is empty."); return; }
+  closeCart();
+  const section = document.getElementById("checkoutSection");
+  section.classList.add("show");
+  document.getElementById("orderMsg").style.display="none";
+  const total = cart.reduce((sum,i)=>{ const p=products.find(x=>x.id===i.id); return sum + (p ? Number(p.price||0)*i.qty : 0); },0);
+  document.getElementById("checkoutTotal").textContent = "Order Total: ₹" + total;
+  section.scrollIntoView({behavior:"smooth"});
+};
+
+window.hideCheckout = function(){
+  document.getElementById("checkoutSection").classList.remove("show");
+};
+
+window.placeOrder = async function(){
+  if(!cart.length){ alert("Your cart is empty."); return; }
+  const name=document.getElementById("cName").value.trim();
+  const phone=document.getElementById("cPhone").value.trim();
+  const address=document.getElementById("cAddress").value.trim();
+  const pincode=document.getElementById("cPincode").value.trim();
+  const payment=document.getElementById("cPayment").value;
+  if(!name || !phone || !address || !pincode){ alert("Please fill all required fields."); return; }
+  if(!/^[0-9]{10}$/.test(phone)){ alert("Please enter a valid 10-digit mobile number."); return; }
+  if(!/^[0-9]{6}$/.test(pincode)){ alert("Please enter a valid 6-digit PIN code."); return; }
+  const items=cart.map(i=>{ const p=products.find(x=>x.id===i.id); return p ? {productId:p.id,name:p.name,price:Number(p.price||0),qty:i.qty} : null; }).filter(Boolean);
+  const total=items.reduce((sum,i)=>sum+i.price*i.qty,0);
+  try{
+    const ref=await addDoc(collection(db,"orders"),{
+      customerName:name, customerPhone:phone, address, pincode, payment, items, total, status:"Pending", createdAt:serverTimestamp()
+    });
+    cart=[]; save(); renderCart(); render();
+    document.getElementById("cName").value=""; document.getElementById("cPhone").value=""; document.getElementById("cAddress").value=""; document.getElementById("cPincode").value="";
+    const msg=document.getElementById("orderMsg");
+    msg.style.display="block";
+    msg.textContent="✅ Order placed successfully! Order ID: " + ref.id.slice(-8).toUpperCase();
+  }catch(e){
+    alert("Could not place order: " + e.message);
+  }
 };
 
 window.showAuth = function(){
@@ -357,6 +412,7 @@ onAuthStateChanged(auth,user=>{
     panel.classList.add("show");
     document.getElementById("adminEmail").textContent = user.email;
     renderAdmin();
+    loadOrders();
   }else{
     panel.classList.remove("show");
   }
@@ -423,38 +479,24 @@ window.deleteProduct = async function(id){
   }
 };
 
-window.clearForm = function(){
-  editingId = null;
-  ["pName","pPrice","pOld","pIcon","pImage"].forEach(id=>{
-    document.getElementById(id).value="";
-  });
-};
-
-function renderAdmin(){
-  const box = document.getElementById("adminList");
-  if(!box) return;
-
-  box.innerHTML = products.length
-    ? products.map(p=>`
-      <div class="admin-item">
-        <div style="flex:1">
-          <b>${p.name}</b> — ₹${Number(p.price || 0)}
-        </div>
-        <button class="edit" onclick="editProduct('${p.id}')">Edit</button>
-        <button onclick="deleteProduct('${p.id}')">Delete</button>
-      </div>
-    `).join("")
-    : "<p>No products yet. Add your first product.</p>";
+async function loadOrders(){
+  const box=document.getElementById("ordersList");
+  if(!box || !auth.currentUser || auth.currentUser.email !== ADMIN_EMAIL) return;
+  try{
+    const snap=await getDocs(collection(db,"orders"));
+    const orders=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+      const ta=a.createdAt?.seconds||0, tb=b.createdAt?.seconds||0; return tb-ta;
+    });
+    box.innerHTML=orders.length ? orders.map(o=>{
+      const items=(o.items||[]).map(i=>`${i.name} × ${i.qty}`).join(", ");
+      return `<div class="admin-item" style="display:block"><b>Order #${o.id.slice(-8).toUpperCase()}</b><br>
+      👤 ${o.customerName||""} | 📞 ${o.customerPhone||""}<br>
+      📍 ${o.address||""}, ${o.pincode||""}<br>
+      🛍️ ${items}<br><b>Total: ₹${Number(o.total||0)}</b> | 💳 ${o.payment||"COD"} | <b>${o.status||"Pending"}</b></div>`;
+    }).join("") : "<p>No customer orders yet.</p>";
+  }catch(e){ box.innerHTML="<p>Could not load orders.</p>"; }
 }
 
-loadProducts().catch(e=>{
-  console.error(e);
-  document.getElementById("firebaseStatus").textContent =
-    "❌ Firebase connection error: " + e.message;
-  document.getElementById("products").innerHTML =
-    '<div class="empty">Database connected নয়। Firebase settings/rules check করুন.</div>';
-});
-</script>
-
-</body>
-</html>
+window.clearForm = function(){
+  editingId = null;
+  ["pN
