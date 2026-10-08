@@ -5,58 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KHUSI - Shop Easy. Shop Happy.</title>
 <style>
-:root{
- --blue:#1769ff;--blue2:#5b35f5;--yellow:#ffd814;--orange:#ff8a00;
- --ink:#172033;--muted:#667085;--bg:#f6f8fc;--white:#fff;
- --shadow:0 10px 30px rgba(20,32,55,.09);--radius:16px
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-header{background:linear-gradient(105deg,#155eef,#5b35f5);color:#fff;position:sticky;top:0;z-index:50;box-shadow:0 4px 18px #14203725}
-.top{display:flex;gap:18px;align-items:center;padding:12px 4%;max-width:1400px;margin:auto}
-.logo{font-size:29px;font-weight:900;letter-spacing:.3px;white-space:nowrap}.tag{font-size:10px;color:#ffe36e;font-weight:700;letter-spacing:.3px}
-.search{flex:1;max-width:720px;background:#fff;display:flex;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px #0002}
-.search input{flex:1;border:0;padding:13px 15px;outline:0;font-size:15px}.search button{border:0;background:#fff;padding:0 17px;font-size:18px}
-.actions{display:flex;gap:15px;font-weight:800}.actions span{cursor:pointer;white-space:nowrap}.actions span:hover{opacity:.85}
-.cats{background:#fff;color:#30394d;display:flex;justify-content:center;gap:30px;padding:13px;overflow:auto;box-shadow:0 1px 5px #0001}
-.cats span{cursor:pointer;white-space:nowrap;font-weight:700}.cats span:hover{color:var(--blue)}
-.hero{max-width:1240px;margin:18px auto;padding:48px 38px;border-radius:22px;background:linear-gradient(120deg,#0b72ff 0%,#5132e9 65%,#7927c8 100%);color:#fff;display:flex;justify-content:space-between;align-items:center;box-shadow:0 18px 40px #2746c52b;overflow:hidden;position:relative}
-.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-70px;top:-120px;background:#ffffff16}
-.hero h1{font-size:44px;line-height:1.08;margin:0 0 12px;max-width:650px}.hero p{font-size:17px;opacity:.94;margin:0 0 22px}
-.hero button{background:var(--yellow);border:0;padding:13px 24px;border-radius:8px;font-weight:900;box-shadow:0 5px 12px #0002}.hero button:hover{transform:translateY(-1px)}
-.art{font-size:96px;position:relative;z-index:1}
-.features{max-width:1240px;margin:0 auto 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 16px}
-.feature{background:#fff;border-radius:14px;padding:15px;display:flex;gap:10px;align-items:center;box-shadow:0 4px 16px #0000000d}.feature b{display:block}.feature small{color:var(--muted)}
-main{max-width:1240px;margin:auto;padding:0 16px 48px}
-.sectionHead{display:flex;align-items:end;justify-content:space-between;gap:10px;margin:28px 0 14px}.sectionHead h2{margin:0;font-size:25px}.sectionHead span{color:var(--muted);font-size:13px}
-.status{background:#eef5ff;padding:10px 14px;border-radius:9px;margin:10px 0 18px;font-size:13px}
-.products{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.card{background:#fff;padding:12px;border-radius:14px;box-shadow:0 3px 14px #0000000d;transition:.2s;position:relative;border:1px solid #edf0f5}
-.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.pic{height:185px;background:linear-gradient(145deg,#f7f9fc,#eef2f7);display:flex;align-items:center;justify-content:center;font-size:68px;border-radius:11px;overflow:hidden}.pic img{width:100%;height:100%;object-fit:contain}
-.name{font-weight:800;margin:12px 0 7px;min-height:38px;line-height:1.25}.price{font-size:20px;font-weight:900}.old{text-decoration:line-through;color:#98a2b3;font-size:12px;margin-left:6px}
-.add,.btn{border:0;padding:10px 14px;border-radius:8px;font-weight:800;cursor:pointer;background:var(--blue);color:#fff}.add{width:100%;margin-top:11px;background:var(--orange);color:#111}.add:hover,.btn:hover{filter:brightness(.96)}
-.modal{display:none;position:fixed;inset:0;background:#0009;z-index:100}.modal.show{display:block}
-.panel{background:#fff;position:absolute;right:0;top:0;width:min(470px,100%);height:100%;padding:22px;overflow:auto;box-shadow:-10px 0 30px #0003}
-.close{float:right;border:0;background:none;font-size:30px;cursor:pointer}.panel h2{margin-top:4px}
-.panel input,.panel textarea,.admin input,.admin select,.admin textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #dfe3ea;border-radius:8px;outline:0}.panel input:focus,.panel textarea:focus,.admin input:focus,.admin select:focus{border-color:var(--blue)}
-.wide{width:100%;margin-top:9px}.row{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #e7eaf0}.qtybtn{border:1px solid #ddd;background:#fff;border-radius:5px;padding:3px 9px}
-.admin{display:none;max-width:1240px;margin:20px auto;padding:22px;background:#fff;border-radius:16px;box-shadow:var(--shadow)}.admin.show{display:block}
-.adminTop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.item{padding:12px;border-bottom:1px solid #ddd;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.item b{margin-right:auto}
-.danger{background:#e53935}.orange{background:#ff9f00;color:#111}.green{background:#16a34a}.gray{background:#64748b}
-.order{border:1px solid #e1e5ec;border-radius:12px;padding:15px;margin:12px 0;background:#fff;box-shadow:0 3px 12px #0000000b}
-.orderhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid #eee;padding-bottom:10px}.orderitems{background:#fafbfc;padding:10px;margin:10px 0;border-radius:7px}
-.orderActions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}.orderActions select{max-width:220px;margin:0}
-.statusBadge{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
-.pending{background:#fff7ed;color:#c2410c}.confirmed{background:#ecfdf5;color:#047857}.shipped{background:#eff6ff;color:#1d4ed8}.delivered{background:#f0fdf4;color:#15803d}.cancelled{background:#fef2f2;color:#b91c1c}
-.orderFilter{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.orderFilter button{border:1px solid #ddd;background:#fff;padding:8px 12px;border-radius:6px}.orderFilter button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
-.empty{padding:18px;text-align:center;color:#64748b;background:#f8fafc;border-radius:8px}.small{font-size:12px;color:#64748b}
-footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:20px}
-@media(max-width:1050px){.products{grid-template-columns:repeat(4,1fr)}.features{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:800px){.products{grid-template-columns:repeat(3,1fr)}.hero h1{font-size:36px}}
-@media(max-width:600px){.top{flex-wrap:wrap;padding:10px 4%}.search{order:3;flex-basis:100%}.hero{margin:10px;padding:30px 22px}.hero h1{font-size:29px}.hero p{font-size:14px}.art{font-size:55px}.features{grid-template-columns:1fr 1fr;padding:0 10px}.products{grid-template-columns:repeat(2,1fr);gap:10px}.pic{height:145px}.grid{grid-template-columns:1fr}.admin{margin:10px;padding:14px}.actions{gap:9px;font-size:13px}.sectionHead h2{font-size:21px}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f5f7fb;color:#172033}
+header{background:#2874f0;color:white;position:sticky;top:0;z-index:5}.top{display:flex;gap:15px;align-items:center;padding:12px 4%}.logo{font-size:27px;font-weight:bold}.tag{font-size:10px;color:#ffd814}.search{flex:1;background:white;display:flex;border-radius:5px}.search input{flex:1;border:0;padding:12px;outline:0}.search button{border:0;background:white}.actions{display:flex;gap:15px;font-weight:bold}.actions span{cursor:pointer}.cats{background:white;color:#333;display:flex;justify-content:center;gap:28px;padding:12px;overflow:auto}.cats span{cursor:pointer;white-space:nowrap}
+.hero{max-width:1200px;margin:16px auto;padding:40px 30px;border-radius:12px;background:linear-gradient(110deg,#087cf0,#7b39d7);color:white;display:flex;justify-content:space-between;align-items:center}.hero h1{font-size:38px;margin:0 0 10px}.hero button{background:#ffd814;border:0;padding:12px 22px;border-radius:5px;font-weight:bold}.art{font-size:80px}
+main{max-width:1200px;margin:auto;padding:0 16px 40px}.status{background:#eef5ff;padding:10px;border-radius:6px;margin:10px 0}.products{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:white;padding:12px;border-radius:8px;box-shadow:0 1px 4px #0002}.pic{height:160px;background:#f1f3f6;display:flex;align-items:center;justify-content:center;font-size:65px}.pic img{max-width:100%;max-height:100%}.name{font-weight:bold;margin:10px 0}.price{font-size:18px;font-weight:bold}.old{text-decoration:line-through;color:#888;font-size:12px;margin-left:5px}.add,.btn{border:0;padding:10px;border-radius:5px;font-weight:bold;cursor:pointer;background:#2874f0;color:white}.add{width:100%;margin-top:10px;background:#ff9f00;color:#111}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20}.modal.show{display:block}.panel{background:white;position:absolute;right:0;top:0;width:min(460px,100%);height:100%;padding:20px;overflow:auto}.close{float:right;border:0;background:none;font-size:26px;cursor:pointer}.panel input,.panel textarea,.admin input,.admin select{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:5px}.wide{width:100%;margin-top:8px}.row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #ddd}
+.admin{display:none;max-width:1200px;margin:20px auto;padding:20px;background:white;border-radius:10px}.admin.show{display:block}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.item{padding:10px;border-bottom:1px solid #ddd}.danger{background:#e53935}.orange{background:#ff9f00;color:#111}.order{border:1px solid #ddd;border-radius:8px;padding:14px;margin:12px 0}.orderhead{display:flex;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid #eee;padding-bottom:8px}.orderitems{background:#fafafa;padding:9px;margin:8px 0}footer{background:#172033;color:white;text-align:center;padding:25px}
+@media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.top{flex-wrap:wrap}.search{order:3;flex-basis:100%}.hero h1{font-size:28px}.art{font-size:50px}.products{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -67,7 +22,7 @@ footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:2
 <div class="logo">KHUSI<div class="tag">Shop Easy. Shop Happy.</div></div>
 <div class="search">
 <input id="search" placeholder="Search products, brands and more..." oninput="render()">
-<button aria-label="Search">🔍</button>
+<button>🔍</button>
 </div>
 <div class="actions">
 <span onclick="showLogin()">👤 Login</span>
@@ -94,15 +49,8 @@ footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:2
 <div class="art">🛍️✨</div>
 </section>
 
-<section class="features">
-<div class="feature"><div>🚚</div><div><b>Fast Delivery</b><small>Across India</small></div></div>
-<div class="feature"><div>💵</div><div><b>Cash on Delivery</b><small>Pay when you receive</small></div></div>
-<div class="feature"><div>🔒</div><div><b>Safe Shopping</b><small>Secure checkout</small></div></div>
-<div class="feature"><div>💬</div><div><b>Customer Support</b><small>We're here to help</small></div></div>
-</section>
-
 <main id="shop">
-<div class="sectionHead"><div><h2>🔥 Popular Products</h2><span>Handpicked deals for you</span></div></div>
+<h2>Popular Products</h2>
 <div id="status" class="status">Connecting to KHUSI database...</div>
 <div id="products" class="products"></div>
 </main>
@@ -149,12 +97,8 @@ footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:2
 <!-- ADMIN -->
 <section id="admin" class="admin">
 
-<div class="adminTop">
-<div>
 <h2>🛠️ KHUSI Admin Panel</h2>
 <p>Logged in as: <b id="adminEmail"></b></p>
-</div>
-</div>
 
 <div class="grid">
 <input id="pName" placeholder="Product name">
@@ -180,16 +124,6 @@ footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:2
 
 <h2>📦 Customer Orders</h2>
 <button class="btn" onclick="loadOrders()">🔄 Refresh Orders</button>
-
-<div class="orderFilter">
-<button class="active" id="filterAll" onclick="setOrderFilter('All')">All</button>
-<button id="filterPending" onclick="setOrderFilter('Pending')">Pending</button>
-<button id="filterConfirmed" onclick="setOrderFilter('Confirmed')">Confirmed</button>
-<button id="filterShipped" onclick="setOrderFilter('Shipped')">Shipped</button>
-<button id="filterDelivered" onclick="setOrderFilter('Delivered')">Delivered</button>
-<button id="filterCancelled" onclick="setOrderFilter('Cancelled')">Cancelled</button>
-</div>
-
 <div id="orders">Loading orders...</div>
 
 </section>
@@ -199,12 +133,14 @@ footer{background:#111827;color:#fff;text-align:center;padding:30px;margin-top:2
 </footer>
 
 <script>
+
 /* =========================
    KHUSI FIREBASE SETTINGS
 ========================= */
 
 const API_KEY="AIzaSyCYmkYMw15yquZSXej1bWkx1p-HZWdFxvg";
 const PROJECT_ID="khusi-568ee";
+
 const ADMIN_EMAIL="rajusheikh813588@gmail.com";
 
 const FIRESTORE=
@@ -212,282 +148,1252 @@ const FIRESTORE=
 +PROJECT_ID+
 "/databases/(default)/documents";
 
+
 /* =========================
    VARIABLES
 ========================= */
 
 let products=[];
-let cart=JSON.parse(localStorage.getItem("khusiCart")||"[]");
+
+let cart=JSON.parse(
+localStorage.getItem("khusiCart")||"[]"
+);
+
 let category="All";
-let token=localStorage.getItem("khusiToken")||"";
-let editingId="";
-let orderFilter="All";
-let allOrders=[];
+
+let token=
+localStorage.getItem("khusiToken")||"";
+
 
 /* =========================
    FIRESTORE HELPERS
 ========================= */
 
 function makeValue(v){
-if(typeof v==="string")return {stringValue:v};
-if(typeof v==="number")return {doubleValue:v};
-if(typeof v==="boolean")return {booleanValue:v};
-if(Array.isArray(v))return {arrayValue:{values:v.map(makeValue)}};
-if(v instanceof Date)return {timestampValue:v.toISOString()};
-if(v===null)return {nullValue:null};
-return {mapValue:{fields:Object.fromEntries(Object.entries(v).map(([k,x])=>[k,makeValue(x)]))}};
+
+if(typeof v==="string")
+return {stringValue:v};
+
+if(typeof v==="number")
+return {doubleValue:v};
+
+if(typeof v==="boolean")
+return {booleanValue:v};
+
+if(Array.isArray(v))
+return {
+arrayValue:{
+values:v.map(makeValue)
 }
+};
+
+if(v instanceof Date)
+return {
+timestampValue:v.toISOString()
+};
+
+if(v===null)
+return {nullValue:null};
+
+return {
+mapValue:{
+fields:Object.fromEntries(
+Object.entries(v).map(
+([k,x])=>[k,makeValue(x)]
+)
+)
+}
+};
+
+
+}
+
 
 function readValue(v){
+
 if(!v)return null;
-if(v.stringValue!==undefined)return v.stringValue;
-if(v.integerValue!==undefined)return Number(v.integerValue);
-if(v.doubleValue!==undefined)return Number(v.doubleValue);
-if(v.booleanValue!==undefined)return v.booleanValue;
-if(v.timestampValue!==undefined)return new Date(v.timestampValue);
-if(v.nullValue!==undefined)return null;
-if(v.arrayValue)return (v.arrayValue.values||[]).map(readValue);
-if(v.mapValue){
-let o={};
-for(let k in v.mapValue.fields||{})o[k]=readValue(v.mapValue.fields[k]);
-return o;
-}
+
+if(v.stringValue!==undefined)
+return v.stringValue;
+
+if(v.integerValue!==undefined)
+return Number(v.integerValue);
+
+if(v.doubleValue!==undefined)
+return Number(v.doubleValue);
+
+if(v.booleanValue!==undefined)
+return v.booleanValue;
+
+if(v.timestampValue!==undefined)
+return new Date(v.timestampValue);
+
+if(v.nullValue!==undefined)
 return null;
+
+if(v.arrayValue)
+return (v.arrayValue.values||[]).map(readValue);
+
+if(v.mapValue){
+
+let o={};
+
+for(let k in v.mapValue.fields||{})
+o[k]=readValue(v.mapValue.fields[k]);
+
+return o;
+
 }
+
+return null;
+
+}
+
 
 function documentData(d){
-let o={id:d.name.split("/").pop()};
-for(let k in d.fields||{})o[k]=readValue(d.fields[k]);
+
+let o={
+id:d.name.split("/").pop()
+};
+
+for(let k in d.fields||{})
+o[k]=readValue(d.fields[k]);
+
 return o;
+
 }
 
+
 async function api(url,options={}){
-/* Use the current Firebase Browser API key for every Firestore REST call. */
-if(url.includes("firestore.googleapis.com")&&!url.includes("key=")){
-url+=(url.includes("?")?"&":"?")+"key="+encodeURIComponent(API_KEY);
-}
+
 options.headers={
 "Content-Type":"application/json",
 ...(options.headers||{})
 };
-if(token)options.headers.Authorization="Bearer "+token;
-let controller=new AbortController();
-let timer=setTimeout(()=>controller.abort(),15000);
-try{
-let r=await fetch(url,{...options,signal:controller.signal});
+
+if(token)
+options.headers.Authorization=
+"Bearer "+token;
+
+let r=await fetch(url,options);
+
 let text=await r.text();
-let data={};
-try{data=text?JSON.parse(text):{};}catch(_){data={};}
-if(!r.ok)throw new Error(data.error?.message||("Request failed ("+r.status+")"));
+
+let data=text?JSON.parse(text):{};
+
+if(!r.ok)
+throw new Error(
+data.error?.message||"Request failed"
+);
+
 return data;
-}catch(e){
-if(e.name==="AbortError")throw new Error("Server response is taking too long. Please refresh and try again.");
-throw e;
-}finally{clearTimeout(timer);}
+
 }
+
 
 /* =========================
    PRODUCTS
 ========================= */
 
 async function loadProducts(){
-let status=document.getElementById("status");
-status.textContent="⏳ Loading products...";
-try{
-let data=await api(FIRESTORE+"/products");
-products=(data.documents||[]).map(documentData);
-localStorage.setItem("khusiProductsCache",JSON.stringify(products));
-document.getElementById("status").textContent="✅ KHUSI database connected successfully.";
-render();
-if(document.getElementById("admin").classList.contains("show"))renderAdmin();
-}catch(e){
-let cached=[];
-try{cached=JSON.parse(localStorage.getItem("khusiProductsCache")||"[]");}catch(_){}
-if(cached.length){
-products=cached;
-status.textContent="⚠️ Showing saved products. Database connection is temporarily unavailable.";
-render();
-}else{
-status.textContent="❌ Could not load products: "+e.message;
-document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please refresh the page.</div>';
-}
-}
-}
 
-function render(){
-let q=document.getElementById("search").value.toLowerCase();
-let list=products.filter(p=>
-(category==="All"||p.cat===category)&&
-String(p.name||"").toLowerCase().includes(q)
+try{
+
+let data=await api(
+FIRESTORE+"/products"
 );
 
-document.getElementById("products").innerHTML=list.length?
+products=(data.documents||[])
+.map(documentData);
+
+document.getElementById("status").textContent=
+"✅ KHUSI database connected successfully.";
+
+render();
+
+}catch(e){
+
+document.getElementById("status").textContent=
+"❌ Database error: "+e.message;
+
+}
+
+}
+
+
+function render(){
+
+let q=
+document.getElementById("search")
+.value
+.toLowerCase();
+
+let list=products.filter(p=>
+
+(category==="All"||p.cat===category)
+
+&&
+
+String(p.name||"")
+.toLowerCase()
+.includes(q)
+
+);
+
+document.getElementById("products").innerHTML=
+
+list.length
+
+?
+
 list.map(p=>`
+
 <div class="card">
-<div class="pic">${p.image?`<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name||"Product")}">`:(p.icon||"🛍️")}</div>
-<div class="name">${escapeHtml(p.name||"Product")}</div>
-<span class="price">₹${Number(p.price||0)}</span>
-${p.old?`<span class="old">₹${Number(p.old)}</span>`:""}
-<button class="add" onclick="addToCart('${p.id}')">ADD TO CART</button>
+
+<div class="pic">
+
+${
+p.image
+?
+`<img src="${p.image}">`
+:
+(p.icon||"🛍️")
+}
+
 </div>
-`).join(""):
+
+<div class="name">
+${p.name||"Product"}
+</div>
+
+<span class="price">
+₹${Number(p.price||0)}
+</span>
+
+${
+p.old
+?
+`<span class="old">
+₹${Number(p.old)}
+</span>`
+:
+""
+}
+
+<button
+class="add"
+onclick="addToCart('${p.id}')">
+
+ADD TO CART
+
+</button>
+
+</div>
+
+`).join("")
+
+:
+
 "<p>No products found.</p>";
+
 updateCount();
+
 }
 
-function escapeHtml(v){
-return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+function setCat(c){
+
+category=c;
+
+render();
+
 }
 
-function setCat(c){category=c;render();}
 
 /* =========================
    CART
 ========================= */
 
 function updateCount(){
-document.getElementById("count").textContent=cart.reduce((a,b)=>a+b.qty,0);
+
+document.getElementById("count")
+.textContent=
+cart.reduce(
+(a,b)=>a+b.qty,0
+);
+
 }
+
 
 function saveCart(){
-localStorage.setItem("khusiCart",JSON.stringify(cart));
+
+localStorage.setItem(
+"khusiCart",
+JSON.stringify(cart)
+);
+
 updateCount();
+
 }
+
 
 function addToCart(id){
+
 let x=cart.find(a=>a.id===id);
-if(x)x.qty++;
-else cart.push({id:id,qty:1});
+
+if(x)
+x.qty++;
+
+else
+cart.push({
+id:id,
+qty:1
+});
+
 saveCart();
+
 openCart();
+
 }
+
 
 function openCart(){
-document.getElementById("cartBox").classList.add("show");
+
+document.getElementById("cartBox")
+.classList.add("show");
+
 renderCart();
+
 }
+
 
 function closeCart(){
-document.getElementById("cartBox").classList.remove("show");
+
+document.getElementById("cartBox")
+.classList.remove("show");
+
 }
+
 
 function renderCart(){
+
 let total=0;
+
 let html="";
+
 for(let item of cart){
-let p=products.find(x=>x.id===item.id);
+
+let p=products.find(
+x=>x.id===item.id
+);
+
 if(!p)continue;
-total+=Number(p.price||0)*item.qty;
+
+total+=
+Number(p.price||0)
+*
+item.qty;
+
 html+=`
+
 <div class="row">
+
 <div style="flex:1">
-<b>${escapeHtml(p.name)}</b><br>
-₹${Number(p.price||0)} × ${item.qty}<br>
-<button class="qtybtn" onclick="changeQty('${p.id}',-1)">−</button>
+
+<b>${p.name}</b>
+
+<br>
+
+₹${p.price}
+×
 ${item.qty}
-<button class="qtybtn" onclick="changeQty('${p.id}',1)">+</button>
-<button class="qtybtn" onclick="removeCart('${p.id}')">Remove</button>
+
+<br>
+
+<button onclick="changeQty('${p.id}',-1)">
+−
+</button>
+
+${item.qty}
+
+<button onclick="changeQty('${p.id}',1)">
++
+</button>
+
+<button onclick="removeCart('${p.id}')">
+Remove
+</button>
+
 </div>
-</div>`;
+
+</div>
+
+`;
+
 }
-document.getElementById("cart").innerHTML=html||"Your cart is empty.";
-document.getElementById("total").textContent=total;
+
+document.getElementById("cart").innerHTML=
+html||"Your cart is empty.";
+
+document.getElementById("total")
+.textContent=total;
+
 }
+
 
 function changeQty(id,n){
-let x=cart.find(a=>a.id===id);
+
+let x=cart.find(
+a=>a.id===id
+);
+
 if(!x)return;
+
 x.qty+=n;
-if(x.qty<=0)cart=cart.filter(a=>a.id!==id);
+
+if(x.qty<=0)
+cart=cart.filter(
+a=>a.id!==id
+);
+
 saveCart();
+
 renderCart();
+
 }
 
+
 function removeCart(id){
-cart=cart.filter(a=>a.id!==id);
+
+cart=cart.filter(
+a=>a.id!==id
+);
+
 saveCart();
+
 renderCart();
+
 }
+
 
 /* =========================
    CHECKOUT
 ========================= */
 
 function checkout(){
-if(!cart.length){alert("Your cart is empty.");return;}
-closeCart();
-document.getElementById("checkoutBox").classList.add("show");
-document.getElementById("checkoutTotal").textContent=document.getElementById("total").textContent;
+
+if(!cart.length){
+
+alert("Your cart is empty.");
+
+return;
+
 }
+
+closeCart();
+
+document.getElementById(
+"checkoutBox"
+).classList.add("show");
+
+document.getElementById(
+"checkoutTotal"
+).textContent=
+document.getElementById("total")
+.textContent;
+
+}
+
 
 function closeCheckout(){
-document.getElementById("checkoutBox").classList.remove("show");
+
+document.getElementById(
+"checkoutBox"
+).classList.remove("show");
+
 }
 
+
 async function placeOrder(){
-let name=document.getElementById("cName").value.trim();
-let phone=document.getElementById("cPhone").value.trim();
-let pin=document.getElementById("cPin").value.trim();
-let address=document.getElementById("cAddress").value.trim();
+
+let name=
+document.getElementById("cName")
+.value.trim();
+
+let phone=
+document.getElementById("cPhone")
+.value.trim();
+
+let pin=
+document.getElementById("cPin")
+.value.trim();
+
+let address=
+document.getElementById("cAddress")
+.value.trim();
 
 if(!name||!phone||!pin||!address){
-alert("Please fill all delivery details.");
+
+alert(
+"Please fill all delivery details."
+);
+
 return;
+
 }
 
 let items=cart.map(x=>{
-let p=products.find(y=>y.id===x.id);
-return p?{name:p.name,price:Number(p.price),qty:x.qty}:null;
+
+let p=products.find(
+y=>y.id===x.id
+);
+
+return p
+?
+{
+name:p.name,
+price:Number(p.price),
+qty:x.qty
+}
+:
+null;
+
 }).filter(Boolean);
 
-let total=items.reduce((s,x)=>s+x.price*x.qty,0);
+
+let total=items.reduce(
+(s,x)=>
+s+
+x.price*x.qty,
+0
+);
+
 
 try{
-await api(FIRESTORE+"/orders",{
+
+await api(
+FIRESTORE+"/orders",
+{
 method:"POST",
-body:JSON.stringify({fields:{
-customerName:makeValue(name),
-phone:makeValue(phone),
-pin:makeValue(pin),
-address:makeValue(address),
-paymentMethod:makeValue("Cash on Delivery"),
-items:makeValue(items),
-total:makeValue(total),
-status:makeValue("Pending"),
-createdAt:makeValue(new Date())
-}})
-});
+body:JSON.stringify({
+
+fields:{
+
+customerName:
+makeValue(name),
+
+phone:
+makeValue(phone),
+
+pin:
+makeValue(pin),
+
+address:
+makeValue(address),
+
+paymentMethod:
+makeValue("Cash on Delivery"),
+
+items:
+makeValue(items),
+
+total:
+makeValue(total),
+
+status:
+makeValue("New"),
+
+createdAt:
+makeValue(new Date())
+
+}
+
+})
+
+}
+);
 
 cart=[];
+
 saveCart();
+
 closeCheckout();
-alert("Order placed successfully! KHUSI will contact you soon.");
+
+alert(
+"Order placed successfully! KHUSI will contact you soon."
+);
+
 }catch(e){
-document.getElementById("orderMsg").textContent="Order failed: "+e.message;
+
+document.getElementById(
+"orderMsg"
+).textContent=
+"Order failed: "+e.message;
+
 }
+
 }
+
 
 /* =========================
    LOGIN
 ========================= */
 
 function showLogin(){
-document.getElementById("loginMsg").textContent="";
-document.getElementById("loginBox").classList.add("show");
+
+document.getElementById("loginBox")
+.classList.add("show");
+
 }
+
 
 function hideLogin(){
-document.getElementById("loginBox").classList.remove("show");
+
+document.getElementById("loginBox")
+.classList.remove("show");
+
 }
 
+
 async function login(){
-let email=document.getElementById("email").value.trim();
-let password=document.getElementById("password").value;
-if(!email||!password){
-document.getElementById("loginMsg").textContent="Please enter email and password.";
+
+let email=
+document.getElementById("email")
+.value.trim();
+
+let password=
+document.getElementById("password")
+.value;
+
+try{
+
+let r=await fetch(
+
+"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
++
+API_KEY,
+
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:JSON.stringify({
+
+email:email,
+
+password:password,
+
+returnSecureToken:true
+
+})
+
+}
+
+);
+
+let data=await r.json();
+
+if(!r.ok)
+throw new Error(
+data.error?.message||
+"Login failed"
+);
+
+token=data.idToken;
+
+localStorage.setItem(
+"khusiToken",
+token
+);
+
+localStorage.setItem(
+"khusiEmail",
+data.email
+);
+
+hideLogin();
+
+if(
+data.email.toLowerCase()
+===
+ADMIN_EMAIL.toLowerCase()
+){
+
+document.getElementById(
+"admin"
+).classList.add("show");
+
+document.getElementById(
+"adminEmail"
+).textContent=
+data.email;
+
+renderAdmin();
+
+loadOrders();
+
+}
+
+}catch(e){
+
+document.getElementById(
+"loginMsg"
+).textContent=
+"Login failed: "+e.message;
+
+}
+
+}
+
+
+function logout(){
+
+token="";
+
+localStorage.removeItem(
+"khusiToken"
+);
+
+localStorage.removeItem(
+"khusiEmail"
+);
+
+document.getElementById(
+"admin"
+).classList.remove("show");
+
+}
+
+
+/* =========================
+   ADMIN PRODUCTS
+========================= */
+
+let editingId="";
+
+
+function productFields(){
+
+return {
+
+name:
+makeValue(
+document.getElementById("pName").value.trim()
+),
+
+price:
+makeValue(
+Number(
+document.getElementById("pPrice").value
+)
+),
+
+old:
+makeValue(
+Number(
+document.getElementById("pOld").value
+)||0
+),
+
+cat:
+makeValue(
+document.getElementById("pCat").value
+),
+
+icon:
+makeValue(
+document.getElementById("pIcon").value.trim()
+||"🛍️"
+),
+
+image:
+makeValue(
+document.getElementById("pImage").value.trim()
+)
+
+};
+
+}
+
+
+async function saveProduct(){
+
+let name=
+document.getElementById("pName")
+.value.trim();
+
+let price=
+Number(
+document.getElementById("pPrice")
+.value
+);
+
+if(!name||!price){
+
+alert(
+"Product name and price are required."
+);
+
 return;
+
 }
 
 try{
-let r=await fetch(
-"https://identitytoolkit.goog
+
+let body={
+fields:productFields()
+};
+
+if(editingId){
+
+await api(
+
+FIRESTORE+
+"/products/"+
+editingId,
+
+{
+
+method:"PATCH",
+
+body:JSON.stringify(body)
+
+}
+
+);
+
+}else{
+
+await api(
+
+FIRESTORE+"/products",
+
+{
+
+method:"POST",
+
+body:JSON.stringify(body)
+
+}
+
+);
+
+}
+
+editingId="";
+
+clearProduct();
+
+await loadProducts();
+
+renderAdmin();
+
+alert(
+"Product saved successfully."
+);
+
+}catch(e){
+
+alert(
+"Product save error: "+e.message
+);
+
+}
+
+}
+
+
+function clearProduct(){
+
+editingId="";
+
+document.getElementById("pName").value="";
+
+document.getElementById("pPrice").value="";
+
+document.getElementById("pOld").value="";
+
+document.getElementById("pIcon").value="";
+
+document.getElementById("pImage").value="";
+
+}
+
+
+function renderAdmin(){
+
+document.getElementById(
+"adminProducts"
+).innerHTML=
+
+products.map(p=>`
+
+<div class="item">
+
+<b>${p.name}</b>
+— ₹${p.price}
+
+<button
+class="btn orange"
+onclick="editProduct('${p.id}')">
+
+Edit
+
+</button>
+
+<button
+class="btn danger"
+onclick="deleteProduct('${p.id}')">
+
+Delete
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+function editProduct(id){
+
+let p=products.find(
+x=>x.id===id
+);
+
+if(!p)return;
+
+editingId=id;
+
+document.getElementById("pName")
+.value=p.name||"";
+
+document.getElementById("pPrice")
+.value=p.price||"";
+
+document.getElementById("pOld")
+.value=p.old||"";
+
+document.getElementById("pCat")
+.value=p.cat||"Electronics";
+
+document.getElementById("pIcon")
+.value=p.icon||"";
+
+document.getElementById("pImage")
+.value=p.image||"";
+
+}
+
+
+async function deleteProduct(id){
+
+if(!confirm(
+"Delete this product?"
+))
+return;
+
+try{
+
+await api(
+
+FIRESTORE+
+"/products/"+
+id,
+
+{
+method:"DELETE"
+}
+
+);
+
+await loadProducts();
+
+renderAdmin();
+
+}catch(e){
+
+alert(e.message);
+
+}
+
+}
+
+
+/* =========================
+   ADMIN ORDERS
+========================= */
+
+async function loadOrders(){
+
+let box=
+document.getElementById("orders");
+
+box.textContent=
+"Loading orders...";
+
+try{
+
+let data=await api(
+FIRESTORE+"/orders"
+);
+
+let orders=
+(data.documents||[])
+.map(documentData);
+
+orders.sort(
+(a,b)=>
+(b.createdAt?.getTime?.()||0)
+-
+(a.createdAt?.getTime?.()||0)
+);
+
+
+box.innerHTML=
+
+orders.length
+
+?
+
+orders.map(o=>`
+
+<div class="order">
+
+<div class="orderhead">
+
+<b>
+📦 Order #${o.id.slice(0,8).toUpperCase()}
+</b>
+
+<span>
+${o.createdAt
+?
+o.createdAt.toLocaleString("en-IN")
+:
+"Date unavailable"}
+</span>
+
+</div>
+
+<p>
+
+<b>👤 Customer:</b>
+${o.customerName||"Not provided"}
+
+<br>
+
+<b>📱 Mobile:</b>
+${o.phone||"Not provided"}
+
+<br>
+
+<b>📮 PIN Code:</b>
+${o.pin||"Not provided"}
+
+<br>
+
+<b>📍 Address:</b>
+${o.address||"Not provided"}
+
+<br>
+
+<b>💵 Payment:</b>
+${o.paymentMethod||"Cash on Delivery"}
+
+</p>
+
+<div class="orderitems">
+
+<b>🛍️ Ordered Products:</b>
+
+<br>
+
+${
+(o.items||[])
+.map(i=>
+`${i.name}
+× ${i.qty}
+— ₹${Number(i.price)*Number(i.qty)}`
+)
+.join("<br>")
+}
+
+</div>
+
+<h3>
+Total: ₹${Number(o.total||0)}
+</h3>
+
+<select
+onchange="changeOrderStatus('${o.id}',this.value)"
+>
+
+<option ${
+o.status==="New"?"selected":""
+}>
+New
+</option>
+
+<option ${
+o.status==="Processing"?"selected":""
+}>
+Processing
+</option>
+
+<option ${
+o.status==="Shipped"?"selected":""
+}>
+Shipped
+</option>
+
+<option ${
+o.status==="Delivered"?"selected":""
+}>
+Delivered
+</option>
+
+<option ${
+o.status==="Cancelled"?"selected":""
+}>
+Cancelled
+</option>
+
+</select>
+
+<button
+class="btn danger"
+onclick="deleteOrder('${o.id}')"
+>
+Delete Order
+</button>
+
+</div>
+
+`).join("")
+
+:
+
+"<p>No orders yet.</p>";
+
+}catch(e){
+
+box.textContent=
+"Orders error: "+e.message;
+
+}
+
+}
+
+
+async function changeOrderStatus(id,status){
+
+try{
+
+await api(
+
+FIRESTORE+
+"/orders/"+
+id,
+
+{
+
+method:"PATCH",
+
+body:JSON.stringify({
+
+fields:{
+status:makeValue(status)
+}
+
+})
+
+}
+
+);
+
+loadOrders();
+
+}catch(e){
+
+alert(e.message);
+
+}
+
+}
+
+
+async function deleteOrder(id){
+
+if(!confirm(
+"Delete this order permanently?"
+))
+return;
+
+try{
+
+await api(
+
+FIRESTORE+
+"/orders/"+
+id,
+
+{
+method:"DELETE"
+}
+
+);
+
+loadOrders();
+
+}catch(e){
+
+alert(e.message);
+
+}
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadProducts();
+
+updateCount();
+
+if(
+localStorage.getItem("khusiEmail")
+&&
+localStorage.getItem("khusiEmail")
+.toLowerCase()
+===
+ADMIN_EMAIL.toLowerCase()
+){
+
+document.getElementById(
+"admin"
+).classList.add("show");
+
+document.getElementById(
+"adminEmail"
+).textContent=
+ADMIN_EMAIL;
+
+renderAdmin();
+
+loadOrders();
+
+}
+
+</script>
+
+</body>
+</html>
