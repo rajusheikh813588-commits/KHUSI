@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KHUSI — Shop Easy. Shop Happy.</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;color:#172033}
 header{position:sticky;top:0;z-index:10;background:#2874f0;color:#fff;box-shadow:0 2px 8px #0002}
 .top{display:flex;align-items:center;gap:18px;padding:12px max(16px,4vw)}
-.logo{font-size:27px;font-weight:800;letter-spacing:.5px;white-space:nowrap}.tag{font-size:11px;color:#ffe500}
+.logo{font-size:27px;font-weight:800;white-space:nowrap}
+.tag{font-size:11px;color:#ffe500}
 .search{flex:1;display:flex;background:#fff;border-radius:5px;overflow:hidden}
 .search input{flex:1;border:0;padding:12px;font-size:15px;outline:0}
 .search button{border:0;background:#fff;padding:0 16px;font-size:18px}
@@ -17,267 +19,921 @@ header{position:sticky;top:0;z-index:10;background:#2874f0;color:#fff;box-shadow
 .cart,.login{cursor:pointer}
 .categories{background:#fff;display:flex;justify-content:center;gap:28px;padding:13px 10px;overflow:auto;white-space:nowrap;border-bottom:1px solid #eee}
 .categories span{cursor:pointer;font-weight:600;font-size:14px}
-.hero{margin:16px auto;max-width:1200px;padding:42px 35px;border-radius:12px;background:linear-gradient(115deg,#1f65e8,#7b39d7);color:#fff;display:flex;justify-content:space-between;align-items:center;overflow:hidden}
-.hero h1{font-size:40px;margin:0 0 10px}.hero p{font-size:18px;margin:0 0 20px}
-.hero button{border:0;background:#ffd814;padding:13px 24px;border-radius:6px;font-weight:800;cursor:pointer}.hero-art{font-size:110px}
+
+.hero{margin:16px auto;max-width:1200px;padding:42px 35px;border-radius:12px;background:linear-gradient(115deg,#1f65e8,#7b39d7);color:#fff;display:flex;justify-content:space-between;align-items:center}
+.hero h1{font-size:40px;margin:0 0 10px}
+.hero p{font-size:18px;margin:0 0 20px}
+.hero button{border:0;background:#ffd814;padding:13px 24px;border-radius:6px;font-weight:800;cursor:pointer}
+.hero-art{font-size:110px}
+
 main{max-width:1200px;margin:auto;padding:0 16px 40px}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}.section-title h2{margin:0;font-size:22px}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:22px 0 12px}
+.section-title h2{margin:0;font-size:22px}
 .products{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
 .card{background:#fff;border-radius:8px;padding:12px;box-shadow:0 1px 4px #0001}
 .pic{height:170px;background:#f1f3f6;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden}
-.pic img{width:100%;height:100%;object-fit:contain}.name{font-weight:700;margin:10px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.price{font-size:18px;font-weight:800}.old{text-decoration:line-through;color:#888;font-size:12px;margin-left:5px}
+.pic img{width:100%;height:100%;object-fit:contain}
+.name{font-weight:700;margin:10px 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price{font-size:18px;font-weight:800}
+.old{text-decoration:line-through;color:#888;font-size:12px;margin-left:5px}
 .add{width:100%;margin-top:10px;border:0;background:#ff9f00;color:#111;padding:10px;border-radius:5px;font-weight:800;cursor:pointer}
-.empty{text-align:center;padding:40px;color:#777}.status{padding:10px;background:#eef5ff;border-radius:6px;margin:10px 0}
-.modal{display:none;position:fixed;inset:0;background:#0007;z-index:20}.modal.show{display:block}
+.empty{text-align:center;padding:40px;color:#777}
+.status{padding:10px;background:#eef5ff;border-radius:6px;margin:10px 0}
+
+.modal{display:none;position:fixed;inset:0;background:#0007;z-index:20}
+.modal.show{display:block}
 .panel{position:absolute;right:0;top:0;height:100%;width:min(460px,100%);background:#fff;padding:20px;overflow:auto}
-.panel h2{margin-top:0}.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}
-.cart-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}.cart-icon{font-size:38px}
+.panel h2{margin-top:0}
+.close{float:right;border:0;background:none;font-size:25px;cursor:pointer}
+
+.cart-row{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+.cart-icon{font-size:38px}
 .qty button{border:1px solid #ddd;background:#fff;padding:4px 9px}
 .checkout{width:100%;padding:13px;border:0;background:#fb641b;color:#fff;font-weight:800;border-radius:5px;margin-top:15px;cursor:pointer}
+
 .formbox{max-width:520px;margin:20px auto;background:#fff;padding:22px;border-radius:10px;box-shadow:0 2px 10px #0002}
 .formbox input,.formbox textarea{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:5px;font-size:15px}
-.formbox textarea{min-height:90px;resize:vertical}.cod{padding:12px;background:#f4f7ff;border-radius:6px;margin:10px 0}
+.formbox textarea{min-height:90px;resize:vertical}
+.cod{padding:12px;background:#f4f7ff;border-radius:6px;margin:10px 0}
 .place{width:100%;padding:13px;border:0;background:#2874f0;color:#fff;font-weight:800;border-radius:5px;cursor:pointer}
+
 .auth-panel{max-width:420px;margin:30px auto;background:#fff;padding:24px;border-radius:10px;box-shadow:0 2px 10px #0002}
-.auth-panel input{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:5px}.auth-panel button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:5px;background:#2874f0;color:#fff;font-weight:700;cursor:pointer}
+.auth-panel input{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:5px}
+.auth-panel button{width:100%;padding:12px;margin-top:8px;border:0;border-radius:5px;background:#2874f0;color:#fff;font-weight:700;cursor:pointer}
 .secondary{background:#eee!important;color:#172033!important}
-.admin{display:none;max-width:1200px;margin:20px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 1px 5px #0001}.admin.show{display:block}
-.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.admin input,.admin select{width:100%;padding:11px;border:1px solid #ddd;border-radius:5px}
+
+.admin{display:none;max-width:1200px;margin:20px auto;padding:20px;background:#fff;border-radius:10px;box-shadow:0 1px 5px #0001}
+.admin.show{display:block}
+.admin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.admin input,.admin select{width:100%;padding:11px;border:1px solid #ddd;border-radius:5px}
 .admin button{padding:10px 15px;border:0;border-radius:5px;background:#2874f0;color:#fff;font-weight:700;cursor:pointer;margin-top:8px}
-.admin-list{margin-top:15px}.admin-item{padding:10px 0;border-bottom:1px solid #eee}.admin-item button{background:#e53935;margin:0}.admin-item .edit{background:#ff9f00;color:#111}
+.admin-list{margin-top:15px}
+.admin-item{padding:10px 0;border-bottom:1px solid #eee}
+.admin-item button{background:#e53935;margin:0}
+.admin-item .edit{background:#ff9f00;color:#111}
+
 .order{border:1px solid #e0e5ed;border-radius:10px;padding:15px;margin:12px 0;background:#fafcff;box-shadow:0 1px 3px #0001}
 .order-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #e8edf4;padding-bottom:9px;margin-bottom:10px}
-.order-id{font-weight:800;color:#2874f0}.order-date{font-size:13px;color:#666}
-.order-info{line-height:1.7}.order-items{background:#fff;border-radius:7px;padding:9px;margin:8px 0;border:1px solid #eee}
+.order-id{font-weight:800;color:#2874f0}
+.order-date{font-size:13px;color:#666}
+.order-info{line-height:1.7}
+.order-items{background:#fff;border-radius:7px;padding:9px;margin:8px 0;border:1px solid #eee}
 .order-total{font-size:18px;font-weight:800;margin-top:8px}
 .order-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .order-actions select{width:auto;min-width:145px;padding:9px;border:1px solid #ddd;border-radius:5px}
 .order-actions button{margin:0}
 .delete-order{background:#e53935!important}
 .refresh-orders{float:right;margin-top:-42px}
+
 footer{background:#172033;color:#fff;padding:28px;text-align:center;margin-top:20px}
-@media(max-width:900px){.products{grid-template-columns:repeat(3,1fr)}.hero-art{font-size:80px}}
-@media(max-width:600px){.top{flex-wrap:wrap;gap:10px}.logo{font-size:24px}.search{order:3;flex-basis:100%}.actions{font-size:13px}.hero{margin:10px;padding:28px 20px}.hero h1{font-size:30px}.hero-art{font-size:55px}.products{grid-template-columns:repeat(2,1fr)}.pic{height:140px}.categories{justify-content:flex-start;gap:20px}.admin-grid{grid-template-columns:1fr}.refresh-orders{float:none;margin:0 0 10px;width:100%}}
+
+@media(max-width:900px){
+.products{grid-template-columns:repeat(3,1fr)}
+.hero-art{font-size:80px}
+}
+@media(max-width:600px){
+.top{flex-wrap:wrap;gap:10px}
+.logo{font-size:24px}
+.search{order:3;flex-basis:100%}
+.actions{font-size:13px}
+.hero{margin:10px;padding:28px 20px}
+.hero h1{font-size:30px}
+.hero-art{font-size:55px}
+.products{grid-template-columns:repeat(2,1fr)}
+.pic{height:140px}
+.categories{justify-content:flex-start;gap:20px}
+.admin-grid{grid-template-columns:1fr}
+.refresh-orders{float:none;margin:0 0 10px;width:100%}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <div class="top">
-<div class="logo">KHUSI<div class="tag">Shop Easy. Shop Happy.</div></div>
-<div class="search"><input id="search" placeholder="Search products, brands and more..." oninput="render()"><button>🔍</button></div>
-<div class="actions"><span class="login" onclick="showAuth()">👤 Login</span><span class="cart" onclick="openCart()">🛒 Cart (<b id="count">0</b>)</span></div>
+
+<div class="logo">
+KHUSI
+<div class="tag">Shop Easy. Shop Happy.</div>
 </div>
+
+<div class="search">
+<input id="search" placeholder="Search products, brands and more..." oninput="render()">
+<button>🔍</button>
+</div>
+
+<div class="actions">
+<span class="login" onclick="showAuth()">👤 Login</span>
+<span class="cart" onclick="openCart()">🛒 Cart (<b id="count">0</b>)</span>
+</div>
+
+</div>
+
 <div class="categories">
-<span onclick="filterCat('All')">All</span><span onclick="filterCat('Electronics')">📱 Electronics</span><span onclick="filterCat('Fashion')">👕 Fashion</span><span onclick="filterCat('Home')">🏠 Home & Kitchen</span><span onclick="filterCat('Beauty')">💄 Beauty</span><span onclick="filterCat('Grocery')">🛒 Grocery</span>
+<span onclick="filterCat('All')">All</span>
+<span onclick="filterCat('Electronics')">📱 Electronics</span>
+<span onclick="filterCat('Fashion')">👕 Fashion</span>
+<span onclick="filterCat('Home')">🏠 Home & Kitchen</span>
+<span onclick="filterCat('Beauty')">💄 Beauty</span>
+<span onclick="filterCat('Grocery')">🛒 Grocery</span>
 </div>
 </header>
 
-<section class="hero"><div><h1>Big Deals, Happy Shopping!</h1><p>Discover great products at amazing prices.</p><button onclick="document.getElementById('shop').scrollIntoView()">Shop Now →</button></div><div class="hero-art">🛍️✨</div></section>
+<section class="hero">
+<div>
+<h1>Big Deals, Happy Shopping!</h1>
+<p>Discover great products at amazing prices.</p>
+<button onclick="document.getElementById('shop').scrollIntoView()">Shop Now →</button>
+</div>
+<div class="hero-art">🛍️✨</div>
+</section>
 
 <main id="shop">
-<div class="section-title"><h2>Popular Products</h2><span id="result"></span></div>
-<div id="firebaseStatus" class="status">Connecting to KHUSI database…</div>
+
+<div class="section-title">
+<h2>Popular Products</h2>
+<span id="result"></span>
+</div>
+
+<div id="firebaseStatus" class="status">
+Connecting to KHUSI database…
+</div>
+
 <div class="products" id="products"></div>
+
 </main>
 
 <section id="authSection" class="auth-panel" style="display:none">
-<h2>🔐 KHUSI Login</h2><input id="email" type="email" placeholder="Email"><input id="password" type="password" placeholder="Password">
-<button onclick="loginUser()">Login</button><button class="secondary" onclick="hideAuth()">Cancel</button><p id="authMsg"></p>
+
+<h2>🔐 KHUSI Login</h2>
+
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button onclick="loginUser()">Login</button>
+<button class="secondary" onclick="hideAuth()">Cancel</button>
+
+<p id="authMsg"></p>
+
 </section>
 
 <section id="adminPanel" class="admin">
-<h2>🛠️ KHUSI Admin Panel</h2><p>Logged in as: <b id="adminEmail"></b></p>
+
+<h2>🛠️ KHUSI Admin Panel</h2>
+
+<p>Logged in as: <b id="adminEmail"></b></p>
 
 <div class="admin-grid">
-<input id="pName" placeholder="Product name"><input id="pPrice" type="number" placeholder="Price"><input id="pOld" type="number" placeholder="Old price">
-<select id="pCat"><option>Electronics</option><option>Fashion</option><option>Home</option><option>Beauty</option><option>Grocery</option></select>
-<input id="pIcon" placeholder="Emoji, e.g. 🎧"><input id="pImage" type="url" placeholder="Product image URL (optional)">
+
+<input id="pName" placeholder="Product name">
+<input id="pPrice" type="number" placeholder="Price">
+<input id="pOld" type="number" placeholder="Old price">
+
+<select id="pCat">
+<option>Electronics</option>
+<option>Fashion</option>
+<option>Home</option>
+<option>Beauty</option>
+<option>Grocery</option>
+</select>
+
+<input id="pIcon" placeholder="Emoji, e.g. 🎧">
+<input id="pImage" type="url" placeholder="Product image URL (optional)">
+
 </div>
-<button onclick="saveProduct()">Save Product</button><button class="secondary" onclick="clearForm()">Clear</button><button onclick="logoutUser()">Logout</button>
+
+<button onclick="saveProduct()">Save Product</button>
+<button class="secondary" onclick="clearForm()">Clear</button>
+<button onclick="logoutUser()">Logout</button>
 
 <div class="admin-list" id="adminList"></div>
 
 <h2 style="margin-top:28px">📦 Customer Orders</h2>
+
 <button class="refresh-orders" onclick="loadOrders()">🔄 Refresh Orders</button>
+
 <div id="ordersList">Loading orders...</div>
+
 </section>
 
 <div class="modal" id="cartModal" onclick="if(event.target.id==='cartModal')closeCart()">
-<div class="panel"><button class="close" onclick="closeCart()">×</button><h2>🛒 Your Cart</h2><div id="cart"></div><hr><h3>Total: ₹<span id="total">0</span></h3><button class="checkout" onclick="openCheckout()">Proceed to Checkout</button></div>
+
+<div class="panel">
+
+<button class="close" onclick="closeCart()">×</button>
+
+<h2>🛒 Your Cart</h2>
+
+<div id="cart"></div>
+
+<hr>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<button class="checkout" onclick="openCheckout()">Proceed to Checkout</button>
+
+</div>
 </div>
 
 <div class="modal" id="checkoutModal" onclick="if(event.target.id==='checkoutModal')closeCheckout()">
-<div class="panel"><button class="close" onclick="closeCheckout()">×</button><h2>🧾 Checkout</h2>
+
+<div class="panel">
+
+<button class="close" onclick="closeCheckout()">×</button>
+
+<h2>🧾 Checkout</h2>
+
 <div class="formbox" style="box-shadow:none;margin:0;padding:0">
-<input id="cName" placeholder="Full Name"><input id="cPhone" type="tel" placeholder="Mobile Number"><input id="cPin" inputmode="numeric" placeholder="PIN Code">
+
+<input id="cName" placeholder="Full Name">
+<input id="cPhone" type="tel" placeholder="Mobile Number">
+<input id="cPin" inputmode="numeric" placeholder="PIN Code">
+
 <textarea id="cAddress" placeholder="Full Delivery Address"></textarea>
-<div class="cod"><b>💵 Payment:</b> Cash on Delivery</div>
+
+<div class="cod">
+<b>💵 Payment:</b> Cash on Delivery
+</div>
+
 <p>Total: <b>₹<span id="checkoutTotal">0</span></b></p>
+
 <button class="place" onclick="placeOrder()">Place Order</button>
+
 <p id="orderMsg"></p>
-</div></div></div>
 
-<footer>© 2026 KHUSI — Shop Easy. Shop Happy. | Your trusted online shopping store</footer>
+</div>
+</div>
+</div>
 
+<footer>
+© 2026 KHUSI — Shop Easy. Shop Happy. | Your trusted online shopping store
+</footer>
+
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 
 <script>
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCAF02VGwwDDjuDj-0WnueUXXhNaaIagu8",
-  authDomain: "khusi-568ee.firebaseapp.com",
-  projectId: "khusi-568ee",
-  storageBucket: "khusi-568ee.firebasestorage.app",
-  messagingSenderId: "38971993119",
-  appId: "1:38971993119:web:f562ecdbd2ab47036df92a",
-  measurementId: "G-F8LYTML64D"
+apiKey: "AIzaSyCAF02VGwwDDjuDj-0WnueUXXhNaaIagu8",
+authDomain: "khusi-568ee.firebaseapp.com",
+projectId: "khusi-568ee",
+storageBucket: "khusi-568ee.firebasestorage.app",
+messagingSenderId: "38971993119",
+appId: "1:38971993119:web:f562ecdbd2ab47036df92a",
+measurementId: "G-F8LYTML64D"
 };
+
 firebase.initializeApp(firebaseConfig);
+
 const auth = firebase.auth();
 const db = firebase.firestore();
-const ADMIN_EMAIL="rajusheikh813588@gmail.com";
-let products=[], cart=JSON.parse(localStorage.getItem("khusiCart")||"[]"), active="All", editingId=null;
 
-function save(){localStorage.setItem("khusiCart",JSON.stringify(cart));updateCount()}
-function updateCount(){document.getElementById("count").textContent=cart.reduce((s,i)=>s+i.qty,0)}
+const ADMIN_EMAIL = "rajusheikh813588@gmail.com";
 
-window.filterCat=c=>{active=c;render()}
-window.render=function(){
- const q=document.getElementById("search").value.toLowerCase();
- const list=products.filter(p=>(active==="All"||p.cat===active)&&String(p.name||"").toLowerCase().includes(q));
- document.getElementById("result").textContent=list.length+" items";
- document.getElementById("products").innerHTML=list.length?list.map(p=>`<div class="card"><div class="pic">${p.image?`<img src="${p.image}" alt="${p.name||"Product"}">`:(p.icon||"🛍️")}</div><div class="name">${p.name||"Product"}</div><div><span class="price">₹${Number(p.price||0)}</span>${p.old?`<span class="old">₹${Number(p.old)}</span>`:""}</div><button class="add" onclick="add('${p.id}')">ADD TO CART</button></div>`).join(""):`<div class="empty">No products found.</div>`;
- updateCount();
+let products = [];
+let cart = JSON.parse(localStorage.getItem("khusiCart") || "[]");
+let active = "All";
+let editingId = null;
+
+function save(){
+localStorage.setItem("khusiCart",JSON.stringify(cart));
+updateCount();
 }
 
-window.add=id=>{const x=cart.find(i=>i.id===id);if(x)x.qty++;else cart.push({id,qty:1});save();openCart()}
-window.openCart=()=>{document.getElementById("cartModal").classList.add("show");renderCart()}
-window.closeCart=()=>document.getElementById("cartModal").classList.remove("show");
+function updateCount(){
+document.getElementById("count").textContent =
+cart.reduce((s,i)=>s+i.qty,0);
+}
+
+window.filterCat = function(c){
+active=c;
+render();
+};
+
+window.render = function(){
+
+const q=document.getElementById("search").value.toLowerCase();
+
+const list=products.filter(p =>
+(active==="All" || p.cat===active) &&
+String(p.name||"").toLowerCase().includes(q)
+);
+
+document.getElementById("result").textContent=list.length+" items";
+
+document.getElementById("products").innerHTML=list.length
+?list.map(p=>`
+
+<div class="card">
+
+<div class="pic">
+${p.image
+?`<img src="${p.image}" alt="${p.name||"Product"}">`
+:(p.icon||"🛍️")}
+</div>
+
+<div class="name">${p.name||"Product"}</div>
+
+<div>
+<span class="price">₹${Number(p.price||0)}</span>
+
+${p.old
+?`<span class="old">₹${Number(p.old)}</span>`
+:""}
+
+</div>
+
+<button class="add" onclick="add('${p.id}')">
+ADD TO CART
+</button>
+
+</div>
+
+`).join("")
+:`<div class="empty">No products found.</div>`;
+
+updateCount();
+
+};
+
+window.add = function(id){
+
+const x=cart.find(i=>i.id===id);
+
+if(x)
+x.qty++;
+else
+cart.push({id,qty:1});
+
+save();
+
+openCart();
+
+};
+
+window.openCart=function(){
+
+document.getElementById("cartModal").classList.add("show");
+
+renderCart();
+
+};
+
+window.closeCart=function(){
+
+document.getElementById("cartModal").classList.remove("show");
+
+};
 
 function renderCart(){
- let total=0,box=document.getElementById("cart");
- if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.</div>';document.getElementById("total").textContent=0;return}
- box.innerHTML=cart.map(i=>{const p=products.find(x=>x.id===i.id);if(!p)return"";total+=Number(p.price||0)*i.qty;return `<div class="cart-row"><div class="cart-icon">${p.icon||"🛍️"}</div><div style="flex:1"><b>${p.name}</b><div>₹${Number(p.price||0)} × ${i.qty}</div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button> ${i.qty} <button onclick="changeQty('${p.id}',1)">+</button> <button onclick="removeItem('${p.id}')">Remove</button></div></div></div>`}).join("");
- document.getElementById("total").textContent=total;
+
+let total=0;
+
+let box=document.getElementById("cart");
+
+if(!cart.length){
+
+box.innerHTML='<div class="empty">Your cart is empty.</div>';
+
+document.getElementById("total").textContent=0;
+
+return;
+
 }
 
-window.changeQty=(id,n)=>{const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=n;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);save();renderCart();render()}
-window.removeItem=id=>{cart=cart.filter(i=>i.id!==id);save();renderCart();render()}
+box.innerHTML=cart.map(i=>{
 
-window.openCheckout=()=>{
- if(!cart.length){alert("Your cart is empty.");return}
- document.getElementById("cartModal").classList.remove("show");
- document.getElementById("checkoutModal").classList.add("show");
- document.getElementById("checkoutTotal").textContent=document.getElementById("total").textContent;
+const p=products.find(x=>x.id===i.id);
+
+if(!p)return"";
+
+total += Number(p.price||0)*i.qty;
+
+return `
+
+<div class="cart-row">
+
+<div class="cart-icon">${p.icon||"🛍️"}</div>
+
+<div style="flex:1">
+
+<b>${p.name}</b>
+
+<div>₹${Number(p.price||0)} × ${i.qty}</div>
+
+<div class="qty">
+
+<button onclick="changeQty('${p.id}',-1)">−</button>
+
+${i.qty}
+
+<button onclick="changeQty('${p.id}',1)">+</button>
+
+<button onclick="removeItem('${p.id}')">
+Remove
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+document.getElementById("total").textContent=total;
+
 }
-window.closeCheckout=()=>document.getElementById("checkoutModal").classList.remove("show");
 
-window.placeOrder=async()=>{
- const name=document.getElementById("cName").value.trim(),phone=document.getElementById("cPhone").value.trim(),pin=document.getElementById("cPin").value.trim(),address=document.getElementById("cAddress").value.trim();
- if(!name||!phone||!pin||!address){alert("Please fill Name, Mobile, PIN Code and Address.");return}
- const items=cart.map(i=>{const p=products.find(x=>x.id===i.id);return p?{productId:p.id,name:p.name,price:Number(p.price||0),qty:i.qty}:null}).filter(Boolean);
- const total=items.reduce((s,i)=>s+i.price*i.qty,0);
- try{
-  await db.collection("orders").add({customerName:name,phone,pin,address,paymentMethod:"Cash on Delivery",items,total,status:"New",createdAt:firebase.firestore.FieldValue.serverTimestamp()});
-  cart=[];save();render();closeCheckout();
-  alert("Order placed successfully! KHUSI will contact you soon.");
- }catch(e){document.getElementById("orderMsg").textContent="Order failed: "+e.message}
+window.changeQty=function(id,n){
+
+const x=cart.find(i=>i.id===id);
+
+if(!x)return;
+
+x.qty+=n;
+
+if(x.qty<=0)
+cart=cart.filter(i=>i.id!==id);
+
+save();
+
+renderCart();
+
+render();
+
+};
+
+window.removeItem=function(id){
+
+cart=cart.filter(i=>i.id!==id);
+
+save();
+
+renderCart();
+
+render();
+
+};
+
+window.openCheckout=function(){
+
+if(!cart.length){
+
+alert("Your cart is empty.");
+
+return;
+
 }
 
-window.showAuth=()=>{document.getElementById("authSection").style.display="block";document.getElementById("authSection").scrollIntoView({behavior:"smooth"})}
-window.hideAuth=()=>document.getElementById("authSection").style.display="none";
-window.loginUser=async()=>{const email=document.getElementById("email").value.trim(),pass=document.getElementById("password").value;try{await auth.signInWithEmailAndPassword(email,pass);document.getElementById("authMsg").textContent="Login successful.";hideAuth()}catch(e){document.getElementById("authMsg").textContent="Login failed: "+e.message}}
-window.logoutUser=()=>auth.signOut();
+document.getElementById("cartModal").classList.remove("show");
+
+document.getElementById("checkoutModal").classList.add("show");
+
+document.getElementById("checkoutTotal").textContent =
+document.getElementById("total").textContent;
+
+};
+
+window.closeCheckout=function(){
+
+document.getElementById("checkoutModal").classList.remove("show");
+
+};
+
+window.placeOrder=async function(){
+
+const name=document.getElementById("cName").value.trim();
+const phone=document.getElementById("cPhone").value.trim();
+const pin=document.getElementById("cPin").value.trim();
+const address=document.getElementById("cAddress").value.trim();
+
+if(!name || !phone || !pin || !address){
+
+alert("Please fill Name, Mobile, PIN Code and Address.");
+
+return;
+
+}
+
+const items=cart.map(i=>{
+
+const p=products.find(x=>x.id===i.id);
+
+return p
+?{
+productId:p.id,
+name:p.name,
+price:Number(p.price||0),
+qty:i.qty
+}
+:null;
+
+}).filter(Boolean);
+
+const total=items.reduce(
+(s,i)=>s+i.price*i.qty,0
+);
+
+try{
+
+await db.collection("orders").add({
+
+customerName:name,
+phone:phone,
+pin:pin,
+address:address,
+paymentMethod:"Cash on Delivery",
+items:items,
+total:total,
+status:"New",
+createdAt:firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+cart=[];
+
+save();
+
+render();
+
+closeCheckout();
+
+alert("Order placed successfully! KHUSI will contact you soon.");
+
+}catch(e){
+
+document.getElementById("orderMsg").textContent =
+"Order failed: "+e.message;
+
+}
+
+};
+
+window.showAuth=function(){
+
+document.getElementById("authSection").style.display="block";
+
+document.getElementById("authSection")
+.scrollIntoView({behavior:"smooth"});
+
+};
+
+window.hideAuth=function(){
+
+document.getElementById("authSection").style.display="none";
+
+};
+
+window.loginUser=async function(){
+
+const email=document.getElementById("email").value.trim();
+
+const pass=document.getElementById("password").value;
+
+try{
+
+await auth.signInWithEmailAndPassword(email,pass);
+
+document.getElementById("authMsg").textContent=
+"Login successful.";
+
+hideAuth();
+
+}catch(e){
+
+document.getElementById("authMsg").textContent=
+"Login failed: "+e.message;
+
+}
+
+};
+
+window.logoutUser=function(){
+
+auth.signOut();
+
+};
 
 async function loadProducts(){
- const snap=await db.collection("products").get();products=snap.docs.map(d=>({id:d.id,...d.data()}));
- document.getElementById("firebaseStatus").textContent="✅ KHUSI database connected successfully.";render();renderAdmin();
+
+const snap=await db.collection("products").get();
+
+products=snap.docs.map(d=>({
+
+id:d.id,
+...d.data()
+
+}));
+
+document.getElementById("firebaseStatus").textContent=
+"✅ KHUSI database connected successfully.";
+
+render();
+
+renderAdmin();
+
 }
 
 function renderAdmin(){
- const box=document.getElementById("adminList");if(!box)return;
- box.innerHTML=products.length?products.map(p=>`<div class="admin-item"><b>${p.name}</b> — ₹${Number(p.price||0)} <button class="edit" onclick="editProduct('${p.id}')">Edit</button> <button onclick="deleteProduct('${p.id}')">Delete</button></div>`).join(""):"<p>No products yet.</p>";
+
+const box=document.getElementById("adminList");
+
+if(!box)return;
+
+box.innerHTML=products.length
+
+?products.map(p=>`
+
+<div class="admin-item">
+
+<b>${p.name}</b> — ₹${Number(p.price||0)}
+
+<button class="edit"
+onclick="editProduct('${p.id}')">
+Edit
+</button>
+
+<button onclick="deleteProduct('${p.id}')">
+Delete
+</button>
+
+</div>
+
+`).join("")
+
+:"<p>No products yet.</p>";
+
 }
 
-window.saveProduct=async()=>{
- const data={name:document.getElementById("pName").value.trim(),price:Number(document.getElementById("pPrice").value),old:Number(document.getElementById("pOld").value)||0,cat:document.getElementById("pCat").value,icon:document.getElementById("pIcon").value.trim()||"🛍️",image:document.getElementById("pImage").value.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
- if(!data.name||!data.price){alert("Product name and price are required.");return}
- try{if(editingId)await db.collection("products").doc(editingId).update(data);else await db.collection("products").add({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});editingId=null;clearForm();await loadProducts();alert("Product saved successfully.")}catch(e){alert("Could not save product: "+e.message)}
+window.saveProduct=async function(){
+
+const data={
+
+name:document.getElementById("pName").value.trim(),
+
+price:Number(document.getElementById("pPrice").value),
+
+old:Number(document.getElementById("pOld").value)||0,
+
+cat:document.getElementById("pCat").value,
+
+icon:document.getElementById("pIcon").value.trim()||"🛍️",
+
+image:document.getElementById("pImage").value.trim(),
+
+updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+
+};
+
+if(!data.name || !data.price){
+
+alert("Product name and price are required.");
+
+return;
+
 }
 
-window.editProduct=id=>{const p=products.find(x=>x.id===id);if(!p)return;editingId=id;document.getElementById("pName").value=p.name||"";document.getElementById("pPrice").value=p.price||"";document.getElementById("pOld").value=p.old||"";document.getElementById("pCat").value=p.cat||"Electronics";document.getElementById("pIcon").value=p.icon||"";document.getElementById("pImage").value=p.image||""}
-window.deleteProduct=async id=>{if(!confirm("Delete this product?"))return;try{await db.collection("products").doc(id).delete();await loadProducts()}catch(e){alert("Could not delete product: "+e.message)}}
-window.clearForm=()=>{editingId=null;["pName","pPrice","pOld","pIcon","pImage"].forEach(id=>document.getElementById(id).value="")}
+try{
+
+if(editingId){
+
+await db.collection("products")
+.doc(editingId)
+.update(data);
+
+}else{
+
+await db.collection("products").add({
+
+...data,
+
+createdAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+}
+
+editingId=null;
+
+clearForm();
+
+await loadProducts();
+
+alert("Product saved successfully.");
+
+}catch(e){
+
+alert("Could not save product: "+e.message);
+
+}
+
+};
+
+window.editProduct=function(id){
+
+const p=products.find(x=>x.id===id);
+
+if(!p)return;
+
+editingId=id;
+
+document.getElementById("pName").value=p.name||"";
+document.getElementById("pPrice").value=p.price||"";
+document.getElementById("pOld").value=p.old||"";
+document.getElementById("pCat").value=p.cat||"Electronics";
+document.getElementById("pIcon").value=p.icon||"";
+document.getElementById("pImage").value=p.image||"";
+
+};
+
+window.deleteProduct=async function(id){
+
+if(!confirm("Delete this product?"))return;
+
+try{
+
+await db.collection("products").doc(id).delete();
+
+await loadProducts();
+
+}catch(e){
+
+alert("Could not delete product: "+e.message);
+
+}
+
+};
+
+window.clearForm=function(){
+
+editingId=null;
+
+["pName","pPrice","pOld","pIcon","pImage"]
+.forEach(id=>{
+document.getElementById(id).value="";
+});
+
+};
 
 function formatOrderDate(ts){
- if(!ts)return "Date not available";
- try{
-  const d=typeof ts.toDate==="function"?ts.toDate():new Date(ts);
-  return d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
- }catch(e){return "Date not available"}
+
+if(!ts)return "Date not available";
+
+try{
+
+const d=typeof ts.toDate==="function"
+?ts.toDate()
+:new Date(ts);
+
+return d.toLocaleString("en-IN",{
+
+day:"2-digit",
+month:"short",
+year:"numeric",
+hour:"2-digit",
+minute:"2-digit"
+
+});
+
+}catch(e){
+
+return "Date not available";
+
+}
+
 }
 
 async function updateOrderStatus(id,status){
- try{
-  await db.collection("orders").doc(id).update({status,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
-  await loadOrders();
- }catch(e){alert("Could not update order: "+e.message)}
+
+try{
+
+await db.collection("orders")
+.doc(id)
+.update({
+
+status:status,
+updatedAt:
+firebase.firestore.FieldValue.serverTimestamp()
+
+});
+
+await loadOrders();
+
+}catch(e){
+
+alert("Could not update order: "+e.message);
+
 }
 
-window.changeOrderStatus=(id,status)=>updateOrderStatus(id,status);
-
-window.deleteOrder=async id=>{
- if(!confirm("Delete this order permanently?"))return;
- try{
-  await db.collection("orders").doc(id).delete();
-  await loadOrders();
- }catch(e){alert("Could not delete order: "+e.message)}
 }
+
+window.changeOrderStatus=function(id,status){
+
+updateOrderStatus(id,status);
+
+};
+
+window.deleteOrder=async function(id){
+
+if(!confirm("Delete this order permanently?"))
+return;
+
+try{
+
+await db.collection("orders")
+.doc(id)
+.delete();
+
+await loadOrders();
+
+}catch(e){
+
+alert("Could not delete order: "+e.message);
+
+}
+
+};
 
 async function loadOrders(){
- const box=document.getElementById("ordersList");
- box.textContent="Loading orders...";
- try{
-  const snap=await db.collection("orders").get();
-  const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
-  orders.sort((a,b)=>{
-   const ad=a.createdAt&&typeof a.createdAt.toMillis==="function"?a.createdAt.toMillis():0;
-   const bd=b.createdAt&&typeof b.createdAt.toMillis==="function"?b.createdAt.toMillis():0;
-   return bd-ad;
-  });
 
-  box.innerHTML=orders.length?orders.map(o=>`
-   <div class="order">
-    <div class="order-head">
-      <span class="order-id">📦 Order #${o.id.slice(0,8).toUpperCase()}</span>
-      <span class="order-date">📅 ${formatOrderDate(o.createdAt)}</span>
-    </div>
-    <div class="order-info">
-      <b>👤 Customer:</b> ${o.customerName||"Not provided"}<br>
-      <b>📱 Mobile:</b> ${o.phone||"Not provided"}<br>
-      <b>📮 PIN Code:</b> ${o.pin||"Not provided"}<br>
-      <b>📍 Address:</b> ${o.address||"Not provided"}<br>
-      <b>💵 Payment:</b> ${o.paymentMethod||"Cash on Delivery"}
-    </div>
-    <div class="order-items">
-      <b>🛍️ Ordered Products:</b><br>
-      ${(o.items||[]).map(i=>`• ${i.name||"Product"} × ${i.qty||1} — ₹${Number(i.price||0)*(Number(i.qty||1))}`).join("<br>")||"No item details"}
-    </div>
-    <div class="order-total">Total: ₹${Number(o.total||0)}</div>
-    <div class="order-actions">
-      <select onchange="changeOrderStatus('${o.id}',this.value)">
-        ${["New","Processing","Shipped","Delivered","Cancelled"].map(s=>`<option value="${s}" ${(o.status||"New")===s?"selected":""}>${s}</option>`).join("")}
-      </select>
-      <button class="delete-order" onclick="deleteOrder('${o.id}')">🗑️ Delete Order</button>
-    </div>
-   </div>
-  `).join(""):"<p>No orders yet.</p>";
- }catch(e){
-  box.textContent="Orders error: "+e.message;
- }
-}
+const box=document.getElementById("ordersList");
 
-auth.onAuthStateChanged(user=>{
- const pan
+box.textContent="Loading orders...";
+
+try{
+
+const snap=await db.collection("orders").get();
+
+const orders=snap.docs.map(d=>({
+
+id:d.id,
+...d.data()
+
+}));
+
+orders.sort((a,b)=>{
+
+const ad=
+a.createdAt &&
+typeof a.createdAt.toMillis==="function"
+?a.createdAt.toMillis()
+:0;
+
+const bd=
+b.createdAt &&
+typeof b.createdAt.toMillis==="function"
+?b.createdAt.toMillis()
+:0;
+
+return bd-ad;
+
+});
+
+box.innerHTML=orders.length
+
+?orders.map(o=>`
+
+<div class="order">
+
+<div class="order-head">
+
+<span class="order-id">
+📦 Order #${o.id.slice(0,8).toUpperCase()}
+</span>
+
+<span class="order-date">
+📅 ${formatOrderDate(o.createdAt)}
+</span>
+
+</div>
+
+<div class="order-info">
+
+<b>👤 Customer:</b>
+${o.customerName||"Not provided"}<br>
+
+<b>📱 Mobile:</b>
+${o.phone||"Not provided"}<br>
+
+<b>📮 PIN Code:</b>
+${o.pin||"Not provided"}<br>
+
+<b>📍 Address:</b>
+${o.address||"Not provided"}<br>
+
+<b>💵 Payment:</b>
+${o.paymentMethod||"Cash on Delivery"}
+
+</div>
+
+<div class="order-items">
+
+<b
