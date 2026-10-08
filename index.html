@@ -262,16 +262,28 @@ return o;
 }
 
 async function api(url,options={}){
+/* Use the current Firebase Browser API key for every Firestore REST call. */
+if(url.includes("firestore.googleapis.com")&&!url.includes("key=")){
+url+=(url.includes("?")?"&":"?")+"key="+encodeURIComponent(API_KEY);
+}
 options.headers={
 "Content-Type":"application/json",
 ...(options.headers||{})
 };
 if(token)options.headers.Authorization="Bearer "+token;
-let r=await fetch(url,options);
+let controller=new AbortController();
+let timer=setTimeout(()=>controller.abort(),15000);
+try{
+let r=await fetch(url,{...options,signal:controller.signal});
 let text=await r.text();
-let data=text?JSON.parse(text):{};
-if(!r.ok)throw new Error(data.error?.message||"Request failed");
+let data={};
+try{data=text?JSON.parse(text):{};}catch(_){data={};}
+if(!r.ok)throw new Error(data.error?.message||("Request failed ("+r.status+")"));
 return data;
+}catch(e){
+if(e.name==="AbortError")throw new Error("Server response is taking too long. Please refresh and try again.");
+throw e;
+}finally{clearTimeout(timer);}
 }
 
 /* =========================
@@ -279,14 +291,26 @@ return data;
 ========================= */
 
 async function loadProducts(){
+let status=document.getElementById("status");
+status.textContent="⏳ Loading products...";
 try{
 let data=await api(FIRESTORE+"/products");
 products=(data.documents||[]).map(documentData);
+localStorage.setItem("khusiProductsCache",JSON.stringify(products));
 document.getElementById("status").textContent="✅ KHUSI database connected successfully.";
 render();
 if(document.getElementById("admin").classList.contains("show"))renderAdmin();
 }catch(e){
-document.getElementById("status").textContent="❌ Database error: "+e.message;
+let cached=[];
+try{cached=JSON.parse(localStorage.getItem("khusiProductsCache")||"[]");}catch(_){}
+if(cached.length){
+products=cached;
+status.textContent="⚠️ Showing saved products. Database connection is temporarily unavailable.";
+render();
+}else{
+status.textContent="❌ Could not load products: "+e.message;
+document.getElementById("products").innerHTML='<div class="empty">Products are temporarily unavailable. Please refresh the page.</div>';
+}
 }
 }
 
@@ -466,37 +490,4 @@ return;
 
 try{
 let r=await fetch(
-"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="+API_KEY,
-{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({email:email,password:password,returnSecureToken:true})
-});
-let data=await r.json();
-if(!r.ok)throw new Error(data.error?.message||"Login failed");
-
-token=data.idToken;
-localStorage.setItem("khusiToken",token);
-localStorage.setItem("khusiEmail",data.email);
-hideLogin();
-
-if(data.email.toLowerCase()===ADMIN_EMAIL.toLowerCase()){
-document.getElementById("admin").classList.add("show");
-document.getElementById("adminEmail").textContent=data.email;
-renderAdmin();
-loadOrders();
-document.getElementById("admin").scrollIntoView({behavior:"smooth"});
-}
-}catch(e){
-document.getElementById("loginMsg").textContent="Login failed: "+friendlyError(e.message);
-}
-}
-
-function friendlyError(msg){
-if(msg==="INVALID_LOGIN_CREDENTIALS"||msg==="INVALID_PASSWORD"||msg==="EMAIL_NOT_FOUND")return "Email or password is incorrect.";
-if(msg==="TOO_MANY_ATTEMPTS_TRY_LATER")return "Too many attempts. Please try again later.";
-return msg;
-}
-
-function logout(){
-tok
+"https://identitytoolkit.goog
